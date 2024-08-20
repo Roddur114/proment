@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Management</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}"> <!-- Link to external CSS -->
+</head>
+<body>
+    <div class="container mt-5">
+        <!-- Wrapper for Logo and Content -->
+        <div class="d-flex justify-content-between mb-4">
+            <!-- Company Logo -->
+            <div class="logo-wrapper">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Company Logo" class="logo">
+            </div>
+        </div>
+        
+        <!-- Form to Add New Project -->
+        <form method="POST" action="{{ url_for('add_project') }}" class="mb-4">
+            <div class="form-row">
+                <div class="col">
+                    <input type="text" name="name" class="form-control" placeholder="Project Name" required>
+                </div>
+                <div class="col">
+                    <input type="text" name="product_type" class="form-control" placeholder="Product Type" required>
+                </div>
+                <div class="col">
+                    <input type="text" name="rating" class="form-control" placeholder="Product Rating" required>
+                </div>
+                <div class="col">
+                    <input type="text" name="members" class="form-control" placeholder="Members" required>
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary btn-block">Add Project</button>
+                </div>
+            </div>
+        </form>
+        
+        <!-- Project Details Table -->
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th><a href="?sort_by=id&order={{ 'desc' if order == 'asc' and sort_by == 'id' else 'asc' }}">ID</a></th>
+                    <th><a href="?sort_by=name&order={{ 'desc' if order == 'asc' and sort_by == 'name' else 'asc' }}">Name</a></th>
+                    <th><a href="?sort_by=product_type&order={{ 'desc' if order == 'asc' and sort_by == 'product_type' else 'asc' }}">Product Type</a></th>
+                    <th><a href="?sort_by=rating&order={{ 'desc' if order == 'asc' and sort_by == 'rating' else 'asc' }}">Rating</a></th>
+                    <th><a href="?sort_by=members&order={{ 'desc' if order == 'asc' and sort_by == 'members' else 'asc' }}">Members</a></th>
+                    <th><a href="?sort_by=progress&order={{ 'desc' if order == 'asc' and sort_by == 'progress' else 'asc' }}">Progress</a></th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for project in projects %}
+                <tr>
+                    <td>{{ project.id }}</td>
+                    <td>{{ project.name }}</td>
+                    <td>{{ project.product_type }}</td>
+                    <td>{{ project.rating }}</td>
+                    <td>{{ project.members }}</td>
+                    <td>{{ project.progress }}</td>
+                    <td>
+                        <!-- Edit Project Button -->
+                        <a href="{{ url_for('edit_project', project_id=project.id) }}" class="btn btn-secondary btn-sm">Edit</a>
+
+                        <!-- Delete Project Form -->
+                        <form method="POST" action="{{ url_for('delete_project', project_id=project.id) }}" style="display:inline-block;">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

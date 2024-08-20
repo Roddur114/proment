@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Project</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Edit Project</h1>
+        
+        <form method="POST" action="{{ url_for('edit_project', project_id=project.id) }}">
+            <div class="form-group">
+                <label for="name">Project Name</label>
+                <input type="text" name="name" class="form-control" id="name" value="{{ project.name }}" required>
+            </div>
+            <div class="form-group">
+                <label for="product_type">Product Type</label>
+                <input type="text" name="product_type" class="form-control" id="product_type" value="{{ project.product_type }}" required>
+            </div>
+            <div class="form-group">
+                <label for="rating">Rating</label>
+                <input type="text" name="rating" class="form-control" id="rating" value="{{ project.rating }}" required>
+            </div>
+            <div class="form-group">
+                <label for="members">Members</label>
+                <input type="text" name="members" class="form-control" id="members" value="{{ project.members }}" required>
+            </div>
+            <div class="form-group">
+                <label for="progress">Progress</label>
+                <select name="progress" class="form-control" id="progress">
+                    <option value="In Progress" {% if project.progress == 'In Progress' %}selected{% endif %}>In Progress</option>
+                    <option value="Finished" {% if project.progress == 'Finished' %}selected{% endif %}>Finished</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Update Project</button>
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
